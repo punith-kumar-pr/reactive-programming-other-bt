@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}"/>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+    <include resource="co/elastic/logging/logback/boot/ecs-console-appender.xml" />
+    <include resource="co/elastic/logging/logback/boot/ecs-file-appender.xml" />
+
+    <appender name="ECS_JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="co.elastic.logging.logback.EcsEncoder" />
+            <!-- Customize ECS properties as needed -->
+<!--            <serviceName>my-application</serviceName>-->
+<!--            <serviceVersion>my-application-version</serviceVersion>-->
+<!--            <serviceEnvironment>my-application-environment</serviceEnvironment>-->
+<!--            <serviceNodeName>my-application-cluster-node</serviceNodeName>-->
+<!--        </encoder>-->
+    </appender>
+
+    <appender name="ECS_JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/logs/logs.json</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/logs/logs.%d{yyyy-MM-dd}.%i.json</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="co.elastic.logging.logback.EcsEncoder"/>
+    </appender>
+
+
+
+    <root level="INFO">
+        <!-- Update the appender-ref to use the newly defined encoder -->
+        <appender-ref ref="ECS_JSON_CONSOLE"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ECS_JSON_FILE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

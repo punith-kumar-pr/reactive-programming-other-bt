@@ -1,0 +1,34 @@
+run the wildfly image:
+docker run -p 8080:8080 -p 9990:9990 -it --name wildfly-setup quay.io/wildfly/wildfly:27.0.0.Final-jdk11 /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+
+
+run wildfly image and use terminal of running container
+-------------------------------------------------------
+1) run with wildfly-setup
+   docker run -it --name wildfly-setup quay.io/wildfly/wildfly:27.0.0.Final-jdk11
+
+2) use terminal of that conatiner
+   docker exec -it wildfly-setup /bin/bash
+
+3) add user
+   /opt/jboss/wildfly/bin/add-user.sh
+   (direct command -> docker exec -it wildfly-setup /opt/jboss/wildfly/bin/add-user.sh)
+
+4) change password
+   /opt/jboss/wildfly/bin/add-user.sh -u admin -p NewPassword123!
+
+5) see application-users.properties
+   cat /opt/jboss/wildfly/standalone/configuration/application-users.properties
+
+---> use management CLI
+/opt/jboss/wildfly/bin/jboss-cli.sh --connect
+/subsystem=security/security-realm=ApplicationRealm/authentication=classic:add(user=admin,password=NewPassword123!)
+quit
+
+Docker commands to run in wildfly
+---------------------------------
+docker build -t camel-hello-world-wildfly .
+
+docker run -p 8080:8080 -p 9990:9990 -p 8090:8090 -it --name wildfly-setup camel-hello-world-wildfly
+
+

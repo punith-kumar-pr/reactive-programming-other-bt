@@ -1,0 +1,102 @@
+ubuntu 
+---------------
+username: user
+password: user
+
+
+spring boot command to build
+----------------------------
+mvn clean verify -U -Dskip.surefire=true -Dskip.integration=true -Pwipedb
+
+-> Problem with powershell surround it with double quotes 
+mvn clean verify -U "-Dskip.surefire=true" "-Dskip.integration=true" -Pwipedb
+
+mvn clean verify -U -DskipTests -Pwipedb
+
+
+spring boot command to run
+--------------------------
+mvn spring-boot:run "-Dskip.surefire=true" "Dskip.integretion=true"
+
+
+consule command
+---------------
+consul.exe agent -dev
+
+
+add SSL certificate
+-------------------
+keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -alias mslDevRoot  -file <PATH_TO_ROOT_CA.pem>
+
+keytool -import -trustcacerts -keystore C:\Progra~1\Java\jdk-11\lib\security\cacerts -storepass changeit -alias ms
+lDevRoot  -file C:\GMV\rootCA\msl-root-ca.pem
+
+
+
+connect mysql shell
+-------------------
+
+\sql
+\connect root@localhost:3308
+
+
+
+
+Repo - global-nem (date: 31/05/2024 | call with Venkateshan Senthil)
+--------------------------------------------------------------------
+(try with r2dbc drivers NeworkElementEntity - one to many)
+
+-> upgrade to MySQL
+changes in pom.xml, application.yml adding drivers, url etc.
+C:\Windows\System32\drivers\etc\host -> add this 127.0.0.1 mysql.gmv
+
+init_database.sql  -> for creatiing User, DB, granting permisions, etc
+
+
+Meeting with Bibhu (05/06/2024) | New task assigned
+---------------------------------------------------
+wildfly- JBOSS
+(i)  containerize
+(ii) deploy camel 
+	i. (Rest service)
+	ii. CRUD on Timesten
+
+things needed - Data source (manages connection pool)
+
+
+
+
+Sonarqube
+1) Can combine with coverage with jacoco
+2) Running Harbor image is not known
+
+
+Nexus IQ scan
+1) With nexus IQ server
+2) With maven plugin
+	- mvn verify
+
+
+
+
+meet with Bibhu and Venkatesan
+22/05/2024
+
+migration from maria db to MySQL
+________________________________
+
+java 11, maven, spring-boot 2.7, mariaDB then change to MySQL
+CSM NEM - standalone application
+entity failing -> 
+AddressListController
+application.yml
+
+
+CICD (DinD) links
+------------------
+https://boottechnologies-ci.medium.com/spring-boot-api-deployment-using-gitlab-ci-cd-and-docker-e2ebd88eb8af
+https://medium.com/@tonywooster/docker-in-docker-in-gitlab-runners-220caeb708ca
+
+r2dbc
+---------
+https://medium.com/pictet-technologies-blog/reactive-programming-with-spring-data-r2dbc-ee9f1c24848b
